@@ -1,3 +1,63 @@
+## Setting up folders with images/ masks
+The PNG masks should be named `<IMG_ID>-<IMG_CLASS>-<IMG_INSTANCE>.PNG` 
+
+  * img_id refers to the name of the original image
+  * img instance is occurance # per image
+  * Ex: `0-Banana-0.PNG`
+  * save to `/path/to/masks/train`, `/path/to/masks/val`, `/path/to/masks/train_annotations`, `/path/to/masks/val_annotations` 
+
+The original images should be named `<IMG_ID>.JPG`
+
+## Generating annotations:
+* run with `source ./gen_mask_annotations.sh` 
+* script takes in: `CLASS_NAMES_PATH`, `TRAIN_MASK_PATH`, `VAL_MASK_PATH`, `ANNOTATION_OUTPUT_PATH`
+
+#### CLASS_NAMES_PATH: 
+* Path to text file containing list of class names 
+* `/path/to/masks/class_names.txt`
+* Specify classes in `class_names.txt` 
+  * no quotes around classes
+  * no comma after each class name
+  * new line after each class
+  * use underscore if name has more than one word `_` 
+  * Ex: 
+  ```
+    Apple
+    Bear
+  ```
+
+#### TRAIN_MASK_PATH
+* Path to training PNG masks: `/path/to/masks/train_annotations`
+
+#### VAL_MASK_PATH
+* Path to validation PNG masks:  `/path/to/masks/val_annotations`
+
+#### ANNOTATION_OUTPUT_PATH
+* Path to annotations output folder `/path/to/masks/annotations`
+* Train annotations are saved to `/path/to/masks/annotations/train_annotation.json`
+* Val annotations are saved to `/path/to/masks/annotations/val_annotation.json`
+
+## TRAINING MODEL:
+* in `/path/to/Mask_RCNN/samples/coco/`, start training with: `python3 coco2.py train --dataset=../../masks/ --model=coco`
+
+### Parameters
+* Specify weights to start training from:
+  * line 59: `COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")`
+  * checkpoints from previous training sessions can be found at `/path/to/Mask_RCNN/logs`
+
+* Change number of classes (1 + NUM_CLASSES):
+  * line 94 `NUM_CLASSES = 1 + 4`
+
+
+### Common Errors
+*  
+```
+import cv2
+ImportError: /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type`
+```
+uncomment line 36 `sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')`
+
+
 # Mask R-CNN for Object Detection and Segmentation
 
 This is an implementation of [Mask R-CNN](https://arxiv.org/abs/1703.06870) on Python 3, Keras, and TensorFlow. The model generates bounding boxes and segmentation masks for each instance of an object in the image. It's based on Feature Pyramid Network (FPN) and a ResNet101 backbone.
