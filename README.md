@@ -38,7 +38,7 @@ The original images should be named `<IMG_ID>.JPG`
 * Val annotations are saved to `/path/to/masks/annotations/val_annotation.json`
 
 ## TRAINING MODEL:
-* in `/path/to/Mask_RCNN/samples/coco/`, start training with: `python3 coco2.py train --dataset=../../masks/ --model=coco`
+* in `/path/to/Mask_RCNN/samples/coco/`, start training with: `python3 coco2.py train`
 
 ### Parameters
 * Specify weights to start training from:
