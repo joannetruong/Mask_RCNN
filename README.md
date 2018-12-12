@@ -57,6 +57,14 @@ ImportError: /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symb
 ```
 uncomment line 36 `sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')`
 
+### Visualize Results 
+* run with `source ./gen_results/visualize.sh` 
+```
+export WEIGHTS_PATH="/home/naoki/jo_dev/Mask_RCNN/samples/logs/coco20181212T0053/mask_rcnn_coco_0026_0.32187.h5"
+export IMG_PATH="/home/naoki/jo_dev/tri2/tri2_imgs"
+export RESULTS_PATH="/home/naoki/jo_dev/tri2/tri2_detections"
+export CLASS_NAMES="/home/naoki/jo_dev/Mask_RCNN/masks/class_names.txt"
+```
 
 # Mask R-CNN for Object Detection and Segmentation
 
